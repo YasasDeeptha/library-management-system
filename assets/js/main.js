@@ -159,3 +159,93 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+// Staff registration handling
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const staffForm = document.getElementById("staffForm");
+
+    if (staffForm) {
+
+        staffForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById("staff_username").value.trim();
+            const firstname = document.getElementById("staff_firstname").value.trim();
+            const lastname = document.getElementById("staff_lastname").value.trim();
+            const email = document.getElementById("staff_email").value.trim();
+            const password = document.getElementById("staff_password").value.trim();
+
+            const messageBox = document.getElementById("staffMessage");
+            messageBox.classList.add("d-none");
+
+            const usernameRegex = /^[a-zA-Z0-9_]+$/;
+            const nameRegex = /^[a-zA-Z]+$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!usernameRegex.test(username)) {
+                showStaffMessage("Username can only contain letters, numbers and underscore");
+                return;
+            }
+
+            if (!nameRegex.test(firstname)) {
+                showStaffMessage("Invalid first name");
+                return;
+            }
+
+            if (!nameRegex.test(lastname)) {
+                showStaffMessage("Invalid last name");
+                return;
+            }
+
+            if (!emailRegex.test(email)) {
+                showStaffMessage("Invalid email format");
+                return;
+            }
+
+            if (password.length < 8) {
+                showStaffMessage("Password must be at least 8 characters");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("username", username);
+            formData.append("firstname", firstname);
+            formData.append("lastname", lastname);
+            formData.append("email", email);
+            formData.append("password", password);
+
+            fetch("/library-management-system/features/auth/registerprocess.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === "success") {
+                    staffForm.reset();
+                    messageBox.classList.add("d-none");
+
+                    const modalEl = document.getElementById("addStaffModal");
+                    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                    if (modalInstance) modalInstance.hide();
+
+                    location.reload();
+                } else {
+                    showStaffMessage(data);
+                }
+            })
+            .catch(() => {
+                showStaffMessage("Something went wrong");
+            });
+        });
+    }
+
+    function showStaffMessage(message) {
+        const messageBox = document.getElementById("staffMessage");
+        messageBox.classList.remove("d-none");
+        messageBox.innerHTML = message;
+    }
+
+});
+
