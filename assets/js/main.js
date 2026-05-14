@@ -109,3 +109,53 @@ function togglePassword(elementId, passwordPreview) {
     el.innerHTML = passwordPreview + "...";
     el.dataset.state = "shown";
 }
+
+// Staff search handling
+document.addEventListener("DOMContentLoaded", () => {
+
+    const searchStaff =
+        document.getElementById("searchStaff");
+
+    if(searchStaff){
+
+        console.log("Search Loaded");
+
+        searchStaff.addEventListener("keyup", function(){
+
+            console.log("Typing:", this.value);
+
+            const search = this.value;
+
+            const formData = new FormData();
+
+            formData.append("search", search);
+
+            fetch(
+                "/library-management-system/features/auth/searchstaff.php",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            )
+
+            .then(response => response.text())
+
+            .then(data => {
+
+                console.log(data);
+
+                document.getElementById("staffTable").innerHTML = data;
+
+            })
+
+            .catch(error => {
+
+                console.log(error);
+
+            });
+
+        });
+
+    }
+
+});
