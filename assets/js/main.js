@@ -94,3 +94,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
+// Password toggle handling
+function togglePassword(elementId, passwordPreview) {
+    const el = document.getElementById(elementId);
+
+    if (el.dataset.state === "shown") {
+        el.innerHTML = "••••••••";
+        el.dataset.state = "hidden";
+        return;
+    }
+
+    el.innerHTML = passwordPreview + "...";
+    el.dataset.state = "shown";
+}
