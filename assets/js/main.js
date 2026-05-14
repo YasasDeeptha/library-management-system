@@ -249,3 +249,87 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+// Edit profile handling
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const editProfileForm = document.getElementById("editProfileForm");
+
+    if (editProfileForm) {
+
+        editProfileForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const firstName = document.getElementById("profile_firstname").value.trim();
+            const lastName = document.getElementById("profile_lastname").value.trim();
+            const email = document.getElementById("profile_email").value.trim();
+            const password = document.getElementById("profile_password").value.trim();
+            const messageBox = document.getElementById("profileMessage");
+
+            messageBox.classList.add("d-none");
+
+            const nameRegex = /^[A-Za-z]+$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!firstName) {
+                showProfileMessage("First name is required");
+                return;
+            }
+
+            if (!lastName) {
+                showProfileMessage("Last name is required");
+                return;
+            }
+
+            if (!nameRegex.test(firstName)) {
+                showProfileMessage("First name should contain only letters");
+                return;
+            }
+
+            if (!nameRegex.test(lastName)) {
+                showProfileMessage("Last name should contain only letters");
+                return;
+            }
+
+            if (!emailRegex.test(email)) {
+                showProfileMessage("Invalid email format");
+                return;
+            }
+
+            if (password !== "" && password.length < 8) {
+                showProfileMessage("Password must be at least 8 characters");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("first_name", firstName);
+            formData.append("last_name", lastName);
+            formData.append("email", email);
+            formData.append("password", password);
+
+            fetch("/library-management-system/features/auth/updateprofile.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === "success") {
+                    location.reload();
+                } else {
+                    showProfileMessage(data);
+                }
+            })
+            .catch(() => {
+                showProfileMessage("Something went wrong");
+            });
+        });
+
+    }
+
+    function showProfileMessage(message) {
+        const messageBox = document.getElementById("profileMessage");
+        messageBox.classList.remove("d-none");
+        messageBox.innerHTML = message;
+    }
+
+});
