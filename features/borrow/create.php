@@ -19,7 +19,7 @@ $members = $conn->query("SELECT member_id, first_name, last_name FROM member ORD
                 <h5 class="mb-0 fw-bold">Add Borrow</h5>
             </div>
 
-            <form action="" method="POST">
+            <form action="manage.php" method="POST">
                 <input type="hidden" name="add_borrow" value="1">
 
                 <div class="row g-3 mb-3">
@@ -89,7 +89,10 @@ $members = $conn->query("SELECT member_id, first_name, last_name FROM member ORD
                     >
                 </div>
 
-                <button type="submit" class="btn btn-primary px-4 fw-bold">Save</button>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-4 fw-bold">Save</button>
+                    <a href="manage.php" class="btn btn-light px-4">Cancel</a>
+                </div>
             </form>
         </div>
     </div>

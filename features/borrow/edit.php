@@ -18,7 +18,6 @@ $row = [
     'borrower_date_modified' => ''
 ];
 
-
 if ($borrow_id !== '') {
 
     $stmt = $conn->prepare("
@@ -37,10 +36,10 @@ if ($borrow_id !== '') {
         $row = $result->fetch_assoc();
     } else {
         $_SESSION['msg'] = 'Borrow record not found';
+        header('Location: manage.php');
         exit;
     }
 }
-
 
 $books = $conn->query("
     SELECT book_id, book_name
@@ -68,10 +67,9 @@ $members = $conn->query("
                 <h5 class="mb-0 fw-bold">Edit Borrow</h5>
             </div>
 
-            <form action="manageborrow.php" method="POST">
+            <form action="manage.php" method="POST">
 
-                <input type="hidden" name="update_borrow" value="1">
-
+            <input type="hidden" name="update_borrow" value="1">
 
                 <div class="row g-3 mb-3">
 
@@ -267,6 +265,13 @@ $members = $conn->query("
                         Save Changes
 
                     </button>
+
+                    <a href="manage.php"
+                       class="btn btn-light px-4">
+
+                        Cancel
+
+                    </a>
 
                 </div>
 

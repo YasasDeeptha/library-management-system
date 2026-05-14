@@ -55,6 +55,9 @@ if ($borrow_id !== '') {
                 <label class="form-label small fw-medium text-muted">Date</label>
                 <div class="fw-medium"><?php echo htmlspecialchars($row['borrower_date_modified']); ?></div>
             </div>
+            <div class="d-flex gap-2 border-top pt-4">
+                <a href="manage.php" class="btn btn-light px-4">Back</a>
+            </div>
         </div>
     </div>
 </main>
