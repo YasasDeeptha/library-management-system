@@ -33,6 +33,16 @@ $is_staff = strpos($path, '/features/auth/') !== false;
         <a href="/library-management-system/features/members/manage.php" class="nav-link custom-nav-link d-flex align-items-center mt-3 <?php echo $is_members ? 'active' : ''; ?>">
             <span class="material-symbols-outlined me-3">group</span> Members
         </a>
+       <a href="#"
+   class="nav-link custom-nav-link d-flex align-items-center <?php echo $is_staff ? 'active' : ''; ?>"
+   data-bs-toggle="modal"
+   data-bs-target="#superAdminAccessModal">
+
+    <span class="material-symbols-outlined me-3">badge</span>
+
+    Staff
+
+</a>
     </nav>
     <div class="p-3 border-top border-secondary border-opacity-25">
         <a href="/library-management-system/logout.php" class="nav-link custom-nav-link text-danger d-flex align-items-center">
@@ -41,3 +51,70 @@ $is_staff = strpos($path, '/features/auth/') !== false;
     </div>
 </aside>
 
+
+<!-- SUPER ADMIN ACCESS MODAL -->
+
+<div class="modal fade"
+     id="superAdminAccessModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 rounded-4 shadow">
+
+            <div class="modal-header border-0 pb-0">
+
+                <h4 class="fw-bold mb-0">
+
+                    Super Admin Access
+
+                </h4>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+
+            </div>
+
+            <div class="modal-body pt-3">
+
+                <p class="fw-semibold mb-2">
+
+                    Accessing the Staff section requires
+                    Super Admin privileges.
+
+                </p>
+
+                <p class="text-muted small mb-0">
+
+                    (If you continue further,
+                    your current session will be logged out.)
+
+                </p>
+
+            </div>
+
+            <div class="modal-footer border-0 pt-0">
+
+                <button type="button"
+                        class="btn btn-light px-4"
+                        data-bs-dismiss="modal">
+
+                    Cancel
+
+                </button>
+
+                <a href="/library-management-system/features/auth/switchtosuperadmin.php"
+                   class="btn btn-primary px-4">
+
+                    Continue
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
